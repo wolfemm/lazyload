@@ -79,7 +79,16 @@
 
     function _isInsideViewport(element, container, threshold) {
 
+        var boundingClientCache = {};
         var ownerDocument, documentTop, documentLeft;
+
+        function _getBoundingClientRect(element) {
+            if (!boundingClientCache.hasOwnProperty(element)) {
+                boundingClientCache[element] = element.getBoundingClientRect();
+            }
+
+            return boundingClientCache[element];
+        }
 
         function _getDocumentWidth() {
             return window.innerWidth || (ownerDocument.documentElement.clientWidth || document.body.clientWidth);
@@ -90,11 +99,11 @@
         }
 
         function _getTopOffset(element) {
-            return element.getBoundingClientRect().top + documentTop - ownerDocument.documentElement.clientTop;
+            return _getBoundingClientRect(element).top + documentTop - ownerDocument.documentElement.clientTop;
         }
 
         function _getLeftOffset(element) {
-            return element.getBoundingClientRect().left + documentLeft - ownerDocument.documentElement.clientLeft;
+            return _getBoundingClientRect(element).left + documentLeft - ownerDocument.documentElement.clientLeft;
         }
 
         function _isBelowViewport() {
