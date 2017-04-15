@@ -1,39 +1,59 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		uglify: {
+		pkg: grunt.file.readJSON("package.json"),
+		eslint: {
 			options: {
-				banner: '<%= banner %>',
-				sourceMap: true
+				configFile: ".eslintrc.json"
 			},
-			dist: {
-				src: 'src/lazyload.js',
-				dest: 'dist/lazyload.min.js'
+			src: ["src/lazyload.*.js"]
+		},
+		rollup: {
+			options: {
+				"format": "umd",
+				"moduleName": "LazyLoad"
+			},
+			files: {
+				src: "src/lazyload.core.js",
+				dest: "dist/lazyload.js"
 			}
 		},
-		jshint: {
-			files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+		babel: {
 			options: {
-				// options here to override JSHint defaults
-				globals: {
-					jQuery: true,
-					console: true,
-					module: true,
-					document: true
+				sourceMap: false,
+				presets: [["es2015", { "modules": false }]],
+				plugins: ["transform-object-assign"]
+			},
+			dist: {
+				files: {
+					"dist/lazyload.transpiled.js": "dist/lazyload.js"
+				}
+			}
+		},
+		uglify: {
+			options: {
+				banner: "",
+				sourceMap: false
+			},
+			dist: {
+				files: {
+					"dist/lazyload.min.js": "dist/lazyload.js",
+					"dist/lazyload.transpiled.min.js": "dist/lazyload.transpiled.js",
 				}
 			}
 		},
 		watch: {
-			files: ['<%= jshint.files %>'],
-			tasks: ['jshint', 'concat', 'uglify']
+			files: ["<%= eslint.src %>"],
+			tasks: ["eslint", "babel", "uglify"]
 		}
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks("gruntify-eslint");
+	grunt.loadNpmTasks("grunt-babel");
+	grunt.loadNpmTasks("grunt-contrib-uglify");
+	grunt.loadNpmTasks("grunt-rollup");
+	grunt.loadNpmTasks("grunt-contrib-watch");
 
-	grunt.registerTask('default', ['jshint', 'uglify', 'watch']);
+	grunt.registerTask("default", ["eslint", "rollup", "babel", "uglify"]);
+	grunt.registerTask("w", ["eslint", "rollup", "babel", "uglify", "watch"]);
 
 };

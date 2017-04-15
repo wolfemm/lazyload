@@ -1,27 +1,43 @@
 {
   "name": "vanilla-lazyload",
-  "version": "2.1.1",
-  "description": "LazyLoad is a fast, lightweight and flexible script for loading images only when they're about to enter the viewport of a scrollable area, with an excellent support to the progressive JPEG image format. Typescript module definition is available.",
-  "main": "dist/lazyload.min.js",
+  "version": "7.2.0",
+  "description": "A fast, lightweight script to load images as they enter the viewport. SEO friendly, it supports responsive images (both srcset + sizes and picture) and progressive JPEG",
+  "main": "dist/lazyload.transpiled.min.js",
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-es2015": "^6.18.0",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-uglify": "~0.6.0",
-    "grunt-contrib-watch": "~0.6.1"
+    "grunt-contrib-uglify": "~2.3.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-rollup": "^1.0.1",
+    "gruntify-eslint": "^3.1.0",
+    "jest": "^19.0.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/verlok/lazyload"
   },
   "keywords": [
-    "lazy load",
-    "progressive JPEG",
+    "lazy",
+    "load",
+    "responsive",
+    "images",
+    "picture",
+    "srcset",
+    "SEO",
+    "sizes",
+    "progressive",
+    "JPEG",
     "performance",
-    "no-jquery"
+    "perfmatters",
+    "no-jquery",
+    "async",
+    "vanilla"
   ],
   "author": "Andrea \"verlok\" Verlicchi",
   "license": "MIT",
